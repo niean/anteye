@@ -1,0 +1,130 @@
+#!/bin/bash
+workspace=$(cd $(dirname $0)/; pwd)
+cd $workspace
+
+module=anteye
+app=tycs-$module
+conf=cfg.json
+pidfile=var/app.pid
+logfile=var/app.log
+
+mkdir -p var
+
+## opt
+function start() {
+    check_pid
+    running=$?
+    if [ $running -gt 0 ];then
+        echo -n "$app now is running already, pid="
+        cat $pidfile
+        return 1
+    fi
+
+    nohup ./$app -c $conf &> $logfile &
+    echo $! > $pidfile
+    echo "$app started..., pid=$!"
+}
+
+function stop() {
+    pid=`cat $pidfile`
+    kill -9 $pid
+    echo "$app stoped..."
+}
+
+function status() {
+    check_pid
+    running=$?
+    if [ $running -gt 0 ];then
+        echo -n "$app now is running, pid="
+        cat $pidfile
+    else
+        echo "$app is stoped"
+    fi
+}
+
+function show_version() {
+    ./$app -vg
+}
+
+## build
+function tailf() {
+    tail -f $logfile
+}
+
+function build() {
+    commit=$(git log -1 --pretty=%h)
+    cat <<EOF > ./g/git.go
+package g
+const (
+    COMMIT = "$commit"
+)
+EOF
+    go build -o $app main.go
+    show_version
+}
+
+function pack() {
+    build
+    git log -1 --pretty=%h > gitversion
+    version=`./$app -v`
+    tar zcvf $app-$version.tar.gz $app cfg.example.json gitversion control ./test
+}
+
+function packbin() {
+    build
+    git log -1 --pretty=%h > gitversion
+    version=`./$app -v`
+    tar zcvf $app-bin-$version.tar.gz $app gitversion
+}
+
+## help
+function help() {
+    echo "$0 build|pack|packbin|start|stop|restart|status|tail"
+}
+
+## internal
+function check_pid() {
+    if [ -f $pidfile ];then
+        pid=`cat $pidfile`
+        if [ -n $pid ]; then
+            running=`ps -p $pid|grep -v "PID TTY" |wc -l`
+            return $running
+        fi
+    fi
+    return 0
+}
+
+## __main__
+action=$1
+case $action in
+    "start")
+        start
+        ;;
+    "stop")
+        stop
+        ;;
+    "restart")
+        stop && sleep 1 && start
+        ;;
+    "status")
+        status
+        ;;
+    "tail")
+        tailf
+        ;;    
+    "version")
+        show_version
+        ;;    
+    "build")
+        build
+        ;;
+    "pack")
+        pack
+        ;;
+    "packbin")
+        packbin 
+        ;;
+    *)
+        help 
+        ;;
+esac
