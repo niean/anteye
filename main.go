@@ -3,11 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+
 	"github.com/niean/anteye/g"
 	"github.com/niean/anteye/http"
 	"github.com/niean/anteye/monitor"
 	"github.com/niean/anteye/proc"
-	"os"
 )
 
 func main() {

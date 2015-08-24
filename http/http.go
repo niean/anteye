@@ -2,9 +2,10 @@ package http
 
 import (
 	"encoding/json"
-	"github.com/niean/anteye/g"
 	"log"
 	"net/http"
+
+	"github.com/niean/anteye/g"
 )
 
 type Dto struct {
@@ -40,7 +41,7 @@ func startHttpServer() {
 		MaxHeaderBytes: 1 << 30,
 	}
 
-	log.Println("http.startHttpServer, ok, listening ", addr)
+	log.Println("http.startHttpServer ok, listening ", addr)
 	log.Fatalln(s.ListenAndServe())
 }
 

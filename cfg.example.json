@@ -6,12 +6,12 @@
     },
     "mail" : {
         "enable": true,
-        "url" : "http://tycloudstart.com:1986/mail/sender",
-        "receivers" : "nieanan@xiaomi.com,nieanan3602@163.com"
+        "url" : "http://mail.server:1986/mail/sender",
+        "receivers" : "nieanan@xiaomi.com,niean.sail@gmail.com"
     },
     "sms" : {
-        "enable": true,
-        "url" : "http://tycloudstart.com:1986/sms/sender",
+        "enable": false,
+        "url" : "http://sms.server:1986/sms/sender",
         "receivers" : "18001163885,13811685238"
     },
     "callback" : {
@@ -20,9 +20,9 @@
     },
     "monitor" : {
         "cluster" : [
-            "transfer,127.0.0.1:6060/health",
-            "task,127.0.0.1:16269/health",
-            "graph,127.0.0.1:6071/health"
+            "transfer,test.hostname01:6060/health",
+            "task,test.hostname01:8002/health",
+            "graph,test.hostname01:6071/health"
         ]
     }
 }
