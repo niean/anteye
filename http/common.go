@@ -2,9 +2,10 @@ package http
 
 import (
 	"fmt"
-	"github.com/niean/anteye/g"
 	"github.com/toolkits/file"
 	"net/http"
+
+	"github.com/niean/anteye/g"
 )
 
 func configCommonRoutes() {

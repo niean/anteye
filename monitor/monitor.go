@@ -3,12 +3,6 @@ package monitor
 import (
 	"bytes"
 	"fmt"
-	"github.com/niean/anteye/g"
-	"github.com/niean/anteye/proc"
-	ncron "github.com/niean/cron"
-	nmap "github.com/niean/gotools/container/nmap"
-	nhttpclient "github.com/niean/gotools/http/httpclient"
-	ntime "github.com/niean/gotools/time"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -16,6 +10,14 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	ncron "github.com/niean/cron"
+	nmap "github.com/niean/gotools/container/nmap"
+	nhttpclient "github.com/niean/gotools/http/httpclient"
+	ntime "github.com/niean/gotools/time"
+
+	"github.com/niean/anteye/g"
+	"github.com/niean/anteye/proc"
 )
 
 var (
@@ -31,7 +33,7 @@ func Start() {
 	monitorCron.AddFuncCC(cronSpec, func() { monitor() }, 1)
 	monitorCron.Start()
 	go alarmJudge()
-	log.Println("monitor.Start, ok")
+	log.Println("monitor.Start ok")
 }
 
 // alarm judge

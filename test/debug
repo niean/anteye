@@ -5,16 +5,16 @@ testdir=$(cd $(dirname $0)/; pwd)
 workdir=$(dirname $testdir)
 cd $workdir
 
-module=task
-app=falcon-$module
+module=anteye
+app=tycs-$module
 pidfile=var/app.pid
 logfile=var/app.log
 control=./control
 httpprex="127.0.0.1:8001"
 
 ## statistics
-function statistics(){
-    curl -s "$httpprex/statistics/all" | python -m json.tool
+function counter(){
+    curl -s "$httpprex/counter/all" | python -m json.tool
 }
 
 ## config
@@ -33,22 +33,12 @@ function config(){
 ## build
 function build(){
     $control build
-    [ $? -eq 0 ] && echo -e "build ok" || { echo -e "build error"; exit 1; }
 }
 function start(){
     $control start
 }
 function stop(){
     $control stop
-}
-
-## index
-function index_update_all(){
-    curl -s "$httpprex/index/updateAll" | python -m json.tool
-}
-
-function index_delete(){
-    curl -s "$httpprex/index/delete" | python -m json.tool
 }
 
 ## tail
@@ -73,17 +63,11 @@ case $action in
     "config")
         config $2
         ;;
-    "index_update")
-        index_update_all
-        ;;
-    "index_delete")
-        index_delete
-        ;;
     "tail")
         tail_log
         ;;
     *)
-        statistics
+        counter
         ;;
 esac
 

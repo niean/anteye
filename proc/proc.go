@@ -15,7 +15,7 @@ var (
 )
 
 func Start() {
-	log.Println("proc:Start, ok")
+	log.Println("proc:Start ok")
 }
 
 func GetAll() []interface{} {

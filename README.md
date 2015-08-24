@@ -1,9 +1,31 @@
 # anteye
-anteye is a small and simple monitor system. anteye should monitor cluster less then 50 instances. it can send notice msgs via **mail**、**sms** or **callback**.  
+anteye is a small and simple monitor system. anteye should monitor cluster less then 50 instances. it can send notice msgs via **mail**、**sms** or **callback(TODO)**.  
 we suggest you deploy more than one anteye instances in the production environment.
 
 ## install
-install from src
+
+You can install anteye from the latest [release](https://github.com/niean/anteye/releases/download/v0.0.2/tycs-anteye-0.0.2.tar.gz),
+
+```bash
+# download release
+wget -q 
+tar -zxf tycs-anteye-$vsn.tar.gz
+
+# config, change configs as you like
+mv cfg.example.json cfg.json
+vim cfg.json
+...
+
+# start
+./control start
+
+# stop
+./control stop
+
+```
+
+Or you can install anteye from scratch
+
 ```bash
 # download src
 git clone git@github.com:niean/anteys.git
@@ -54,7 +76,7 @@ monitor
 ```
 
 ## interface
-anteye sends alarm msgs via http interfaces. these interfaces defined as followings:
+anteye sends msgs via http interfaces. these interfaces defined as followings:
 
 ```bash
 # sms interface
