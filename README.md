@@ -8,7 +8,7 @@ You can install anteye from the latest [release](https://github.com/niean/anteye
 
 ```bash
 # download release
-wget -q 
+wget -q https://github.com/niean/anteye/releases/download/v0.0.2/tycs-anteye-0.0.2.tar.gz
 tar -zxf tycs-anteye-$vsn.tar.gz
 
 # config, change configs as you like
