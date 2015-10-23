@@ -28,6 +28,7 @@ Or you can install anteye from scratch
 
 ```bash
 # download src
+cd $GOPATH/src/github.com/niean
 git clone https://github.com/niean/anteye.git
 cd anteye
 go get ./...
