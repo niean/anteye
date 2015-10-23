@@ -28,7 +28,7 @@ Or you can install anteye from scratch
 
 ```bash
 # download src
-git clone git@github.com:niean/anteys.git
+git clone git@github.com:niean/anteye.git
 cd anteye
 go get ./...
 
