@@ -1,0 +1,10 @@
+{
+    "tags": "service=anteye",
+    "bases": ["runtime"],
+    "push": {
+        "enabled": true
+    },
+    "http": {
+        "enabled": true
+    }
+}

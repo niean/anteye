@@ -33,7 +33,4 @@ _testmain.go
 /var
 /tycs*
 /cfg.json
-/gitversion
-/test/build
-/test/*.go
-
+.gitversion

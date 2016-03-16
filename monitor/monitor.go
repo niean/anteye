@@ -12,12 +12,12 @@ import (
 	"time"
 
 	ncron "github.com/niean/cron"
+	pfc "github.com/niean/goperfcounter"
 	nmap "github.com/niean/gotools/container/nmap"
 	nhttpclient "github.com/niean/gotools/http/httpclient"
 	ntime "github.com/niean/gotools/time"
 
 	"github.com/niean/anteye/g"
-	"github.com/niean/anteye/proc"
 )
 
 var (
@@ -70,7 +70,7 @@ func alarmJudge() {
 				log.Println("alarm send mail error, mail:", mailContent, "", err)
 			} else {
 				// statistics
-				proc.MonitorAlarmMailCnt.Incr()
+				pfc.Meter("MonitorAlarmMail", 1)
 			}
 		}
 
@@ -82,7 +82,7 @@ func alarmJudge() {
 				log.Println("alarm send sms error, sms:", smsContent, "", err)
 			} else {
 				// statistics
-				proc.MonitorAlarmSmsCnt.Incr()
+				pfc.Meter("MonitorAlarmSms", 1)
 			}
 		}
 
@@ -94,7 +94,7 @@ func alarmJudge() {
 				log.Println("alarm callback error, callback:", cfg.Callback, ", content:", cbc, "", err)
 			} else {
 				// statistics
-				proc.MonitorAlarmCallbackCnt.Incr()
+				pfc.Meter("MonitorAlarmCallback", 1)
 			}
 		}
 	}
@@ -170,9 +170,8 @@ func monitor() {
 	log.Printf("monitor, startTs %s, time-consuming %d sec\n", ntime.FormatTs(startTs), endTs-startTs)
 
 	// statistics
-	proc.MonitorCronCnt.Incr()
-	proc.MonitorCronCnt.PutOther("lastStartTs", ntime.FormatTs(startTs))
-	proc.MonitorCronCnt.PutOther("lastTimeConsumingInSec", endTs-startTs)
+	pfc.Meter("MonitorCronCnt", 1)
+	pfc.Gauge("MonitorCronTs", endTs-startTs)
 }
 
 func _monitor() {
