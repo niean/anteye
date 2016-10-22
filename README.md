@@ -93,7 +93,7 @@ params:
   - tos: mail accounts separated by commas
   - content: content of mail
   - subject: subject of mail
-  - from: option, indicates who sends this mail
+  - from: optional, indicates who sends this mail
 
 # callback
 method: http.post
